@@ -20,8 +20,13 @@ cursor.execute('''
 cursor.execute('''
     CREATE TABLE observations (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
-        seriesId TEXT NOT NULL UNIQUE,
+        seriesId TEXT NOT NULL,
         date TEXT NOT NULL,
-        value REAL NOT NULL
+        value REAL NOT NULL,
+        FOREIGN KEY (seriesId) REFERENCES series(seriesId),
+        UNIQUE(seriesId, date)
     )
 ''')
+
+#Close connection
+conn.close()
