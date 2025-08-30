@@ -1,26 +1,30 @@
 ########### Python 3.2 #############
-import urllib.request, json
+import urllib.request, json,time
 
-def fetch_series():
-    try:
-        url = "https://api.riksbank.se/swea/v1/Series?language=en"
+def fetch_series(retries=5, delay=15):
+    for attempt in range(retries):
+        try:
+            url = "https://api.riksbank.se/swea/v1/Series?language=en"
 
-        hdr ={
-        # Request headers
-        'Cache-Control': 'no-cache',
-        }
+            hdr ={
+            # Request headers
+            'Cache-Control': 'no-cache',
+            }
 
-        req = urllib.request.Request(url, headers=hdr)
+            req = urllib.request.Request(url, headers=hdr)
 
-        req.get_method = lambda: 'GET'
-        response = urllib.request.urlopen(req)
-        if response.getcode() != 200:
-            raise Exception(f"Error fetching series: {response.getcode()}")
+            req.get_method = lambda: 'GET'
+            response = urllib.request.urlopen(req)
+            if response.getcode() != 200:
+                raise Exception(f"Error fetching series: {response.getcode()}")
 
-        data = json.loads(response.read())
-    except Exception as e:
-        print(e)
-    return data
+            data = json.loads(response.read())
+            return data
+        except Exception as e:
+            print(e)
+            if "429" in str(e):
+                time.sleep(delay)
+    
 ####################################
 
 
