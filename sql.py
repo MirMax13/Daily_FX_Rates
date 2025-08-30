@@ -1,32 +1,28 @@
 
-import sqlite3
-conn = sqlite3.connect('fx_rates.db')
-cursor = conn.cursor()
-cursor.execute('''
-    CREATE TABLE series (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        seriesId TEXT NOT NULL UNIQUE,
-        source TEXT NOT NULL,
-        shortDescription TEXT NOT NULL,
-        midDescription TEXT NOT NULL,
-        longDescription TEXT NOT NULL,
-        groupID INTEGER NOT NULL,
-        observationMaxDate TEXT NOT NULL,
-        observationMinDate TEXT NOT NULL,
-        seriesClosed INTEGER NOT NULL
-    )
-''')
 
-cursor.execute('''
-    CREATE TABLE observations (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        seriesId TEXT NOT NULL,
-        date TEXT NOT NULL,
-        value REAL NOT NULL,
-        FOREIGN KEY (seriesId) REFERENCES series(seriesId),
-        UNIQUE(seriesId, date)
-    )
-''')
+def init_db(cursor):
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS series (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            seriesId TEXT NOT NULL UNIQUE,
+            source TEXT NOT NULL,
+            shortDescription TEXT NOT NULL,
+            midDescription TEXT NOT NULL,
+            longDescription TEXT NOT NULL,
+            groupID INTEGER NOT NULL,
+            observationMaxDate TEXT NOT NULL,
+            observationMinDate TEXT NOT NULL,
+            seriesClosed INTEGER NOT NULL
+        )
+    ''')
 
-#Close connection
-conn.close()
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS observations (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            seriesId TEXT NOT NULL,
+            date TEXT NOT NULL,
+            value REAL NOT NULL,
+            FOREIGN KEY (seriesId) REFERENCES series(seriesId),
+            UNIQUE(seriesId, date)
+        )
+    ''')

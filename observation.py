@@ -1,14 +1,7 @@
 ########### Python 3.2 #############
 import urllib.request, json
-import sqlite3
-conn = sqlite3.connect('fx_rates.db')
-cursor = conn.cursor()
 
-#For every seriesid in series table do API call
-cursor.execute('SELECT seriesId FROM series')
-series_ids = cursor.fetchall()
-
-for series_id in series_ids:
+def fetch_and_save_latest_observation(series_id, cursor, conn):
     try:
         url = f"https://api.riksbank.se/swea/v1/Observations/Latest/{series_id[0]}"
 
@@ -38,7 +31,3 @@ for series_id in series_ids:
     except Exception as e:
         print(e)
 ####################################
-
-
-# Close connection
-conn.close()
