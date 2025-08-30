@@ -35,7 +35,7 @@ def save_series(response, cursor, conn):
             item['shortDescription'],
             item['midDescription'],
             item['longDescription'],
-            item['groupID'],
+            item['groupId'],
             item['observationMaxDate'],
             item['observationMinDate'],
             int(item.get('seriesClosed'))
