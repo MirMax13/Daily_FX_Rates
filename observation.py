@@ -27,8 +27,8 @@ def fetch_and_save_latest_observation(series_id, cursor, conn, retries=5, delay=
                     data['value']
                 ))
             conn.commit()
-
-            print(data)
+            print(f"✅ {series_id[0]}: {data['date']} saved successfully.")
+            return
         except Exception as e:
             print(e)
             if "429" in str(e):
