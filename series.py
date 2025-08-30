@@ -14,17 +14,18 @@ def fetch_series():
 
         req.get_method = lambda: 'GET'
         response = urllib.request.urlopen(req)
-        print(response.getcode())
-        print(response.read())
+        if response.getcode() != 200:
+            raise Exception(f"Error fetching series: {response.getcode()}")
+
+        data = json.loads(response.read())
     except Exception as e:
         print(e)
-    return response
+    return data
 ####################################
 
 
-def save_series(response, cursor, conn):
+def save_series(data, cursor, conn):
     # Save results into series table
-    data = json.loads(response.read())
     for item in data:
         cursor.execute('''
             INSERT OR IGNORE INTO series (seriesId, source, shortDescription, midDescription, longDescription, groupID, observationMaxDate, observationMinDate, seriesClosed)
