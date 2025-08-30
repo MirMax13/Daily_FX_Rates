@@ -26,8 +26,7 @@ def fetch_and_save_latest_observation(series_id, cursor, conn):
             ))
         conn.commit()
 
-        print(response.getcode())
-        print(response.read())
+        print(data)
     except Exception as e:
         print(e)
 ####################################
