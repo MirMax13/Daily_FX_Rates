@@ -10,9 +10,8 @@ def main():
 
     init_db(cursor)
 
-    series_list = fetch_series(cursor)
-    for serie in series_list:
-        save_series(serie, cursor, conn)
+    series_list = fetch_series()
+    save_series(series_list, cursor, conn)
 
     cursor.execute('SELECT seriesId FROM series')
     series_ids = cursor.fetchall()
