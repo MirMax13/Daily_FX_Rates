@@ -1,0 +1,46 @@
+########### Python 3.2 #############
+import urllib.request, json
+
+try:
+    url = "https://api.riksbank.se/swea/v1/Series?language=en"
+
+    hdr ={
+    # Request headers
+    'Cache-Control': 'no-cache',
+    }
+
+    req = urllib.request.Request(url, headers=hdr)
+
+    req.get_method = lambda: 'GET'
+    response = urllib.request.urlopen(req)
+    print(response.getcode())
+    print(response.read())
+except Exception as e:
+    print(e)
+####################################
+
+import sqlite3
+conn = sqlite3.connect('fx_rates.db')
+cursor = conn.cursor()
+
+# Save results into series table
+data = json.loads(response.read())
+for item in data:
+    cursor.execute('''
+        INSERT OR IGNORE INTO series (seriesId, source, shortDescription, midDescription, longDescription, groupID, observationMaxDate, observationMinDate, seriesClosed)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+    ''', (
+        item['seriesId'],
+        item['source'],
+        item['shortDescription'],
+        item['midDescription'],
+        item['longDescription'],
+        item['groupID'],
+        item['observationMaxDate'],
+        item['observationMinDate'],
+        int(item.get('seriesClosed'))
+    ))
+conn.commit()
+
+# Close the connection
+conn.close()
