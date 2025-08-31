@@ -27,7 +27,10 @@ def fetch_and_save_latest_observation(series_id, cursor, conn, retries=5, delay=
                 (series_id[0], data["date"], data["value"]),
             )
             conn.commit()
-            print(f"✅ {series_id[0]}: {data['date']} saved successfully.")
+            if cursor.rowcount > 0:
+                print(f"💾 {series_id[0]}: {data['date']} inserted.")
+            else:
+                print(f"✅ {series_id[0]}: {data['date']} already exists, skipped.")
             return
         except Exception as e:
             print(e)
