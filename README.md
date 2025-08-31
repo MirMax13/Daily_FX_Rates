@@ -96,7 +96,7 @@ daily-fx-rates/
 | seriesId | TEXT    | Foreign key → `series(seriesId)`       |
 | date     | TEXT    | Date of observation                    |
 | value    | REAL    | Observed value                         |
-| UNIQUE(seriesId, date) to avoid duplicates                  |
+| UNIQUE(seriesId, date)     |         |  to avoid duplicates |
 
 ---
 
