@@ -1,6 +1,6 @@
 import sqlite3
 
-conn = sqlite3.connect('fx_rates.db')
+conn = sqlite3.connect("fx_rates.db")
 cursor = conn.cursor()
 
 query = "SELECT * FROM observations"

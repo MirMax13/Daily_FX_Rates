@@ -1,7 +1,6 @@
-
-
 def init_db(cursor):
-    cursor.execute('''
+    cursor.execute(
+        """
         CREATE TABLE IF NOT EXISTS series (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             seriesId TEXT NOT NULL UNIQUE,
@@ -14,9 +13,11 @@ def init_db(cursor):
             observationMinDate TEXT NOT NULL,
             seriesClosed INTEGER NOT NULL
         )
-    ''')
+    """
+    )
 
-    cursor.execute('''
+    cursor.execute(
+        """
         CREATE TABLE IF NOT EXISTS observations (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             seriesId TEXT NOT NULL,
@@ -25,4 +26,5 @@ def init_db(cursor):
             FOREIGN KEY (seriesId) REFERENCES series(seriesId),
             UNIQUE(seriesId, date)
         )
-    ''')
+    """
+    )
