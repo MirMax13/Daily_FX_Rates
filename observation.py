@@ -27,7 +27,7 @@ def fetch_and_save_latest_observation(series_id, cursor, conn, retries=5, delay=
                 (series_id[0], data["date"], data["value"]),
             )
             conn.commit()
-            if cursor.rowcount > 0:
+            if cursor.lastrowid:
                 print(f"💾 {series_id[0]}: {data['date']} inserted.")
             else:
                 print(f"✅ {series_id[0]}: {data['date']} already exists, skipped.")
