@@ -39,6 +39,7 @@ def fetch_and_save_latest_observation(series_id, cursor, conn, retries=5, delay=
                     f"❌ {series_id[0]}: Rate limit exceeded, retrying in {delay} seconds..."
                 )
                 time.sleep(delay)
+    raise Exception("Max retries reached")
 
 
 ####################################

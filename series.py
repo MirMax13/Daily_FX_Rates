@@ -25,6 +25,7 @@ def fetch_series(retries=5, delay=15):
             print(e)
             if "429" in str(e):
                 time.sleep(delay)
+    raise Exception("Max retries reached")
 
 
 ####################################
