@@ -105,7 +105,7 @@ daily-fx-rates/
 When running main.py, you should see logs like:
 ```bash
 💾 SEKEURPMI: 2025-08-29 inserted.
-✅ SEKEURPMI: 2025-08-29 already exists, skipped.
+⏩ SEKATSPMI: Already up-to-date (2002-02-28)
 💾 USDSEKPMI: 2025-08-29 inserted.
 
 ---
