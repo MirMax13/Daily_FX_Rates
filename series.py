@@ -36,7 +36,7 @@ def save_series(data, cursor, conn):
     for item in data:
         cursor.execute(
             """
-            INSERT OR IGNORE INTO series (seriesId, source, shortDescription, midDescription, longDescription, groupID, observationMaxDate, observationMinDate, seriesClosed)
+            INSERT OR REPLACE INTO series (seriesId, source, shortDescription, midDescription, longDescription, groupID, observationMaxDate, observationMinDate, seriesClosed)
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
         """,
             (
