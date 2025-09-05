@@ -41,11 +41,17 @@ def fetch_and_save_latest_observation(series_id, cursor, conn, retries=5, delay=
                 time.sleep(delay)
     raise Exception("Max retries reached")
 
+
 def needs_update(series_id, latest_date, cursor):
-    cursor.execute("""
+    cursor.execute(
+        """
         SELECT 1 FROM observations
         WHERE seriesId = ? AND date = ?
         LIMIT 1;
-    """, (series_id, latest_date))
+    """,
+        (series_id, latest_date),
+    )
     return cursor.fetchone() is None
+
+
 ####################################

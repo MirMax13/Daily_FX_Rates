@@ -14,7 +14,7 @@ def main():
     series_list = fetch_series()
     save_series(series_list, cursor, conn)
 
-    cursor.execute('SELECT seriesId, observationMaxDate FROM series')
+    cursor.execute("SELECT seriesId, observationMaxDate FROM series")
     series_data = cursor.fetchall()
     print(series_data)
 
